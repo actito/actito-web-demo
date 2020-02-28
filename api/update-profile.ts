@@ -44,6 +44,11 @@ export default async function updateProfile(req: NowRequest, res: NowResponse): 
     const response = await actitoApi<ActitoProfile>(context, "GET", fetchPath);
     const profile = propertiesToObject(response.attributes) as Profile;
 
+    if (!body.customerId || profile?.CustomerID !== body.customerId) {
+      res.status(404).send("Profile not found");
+      return;
+    }
+
     const updatePath = `v4/entity/${body.entity}/table/${body.table}/profile/${profile.profileId}`;
     const { profileId } = await actitoApi<ActitoResponse>(context, "PUT", updatePath, {
       attributes: objectToProperties({ firstName: body.firstName })

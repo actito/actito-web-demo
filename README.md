@@ -12,6 +12,24 @@ _An integration framework illustration_
 
 ![Preference center](./preference-center.png)
 
+## Trying it out on your local environment
+
+1. Clone this on your computer
+1. Add your actito credentials in a .env file at the root of the project (see below)
+1. Install [zeit's now CLI](https://zeit.co/docs/now-cli#getting-started)
+
+   `npm i -g now`
+
+1. Install dependencies
+
+   `npm install`
+
+1. Run a local environment
+
+   `now dev`
+
+1. open `http://localhost:3000` on your browser
+
 ## Back end - using the integration framework
 
 The files in the "/api" folder illustrate the use of the actito integration framework to implement the use cases above.
@@ -93,6 +111,11 @@ We use zeit.co's [serverless functions](https://zeit.co/docs/v2/serverless-funct
         const fetchPath = `v4/entity/${body.entity}/table/${body.table}/profile/emailAddress=${body.emailAddress}`;
         const response = await actitoApi<ActitoProfile>(context, "GET", fetchPath);
         const profile = propertiesToObject(response.attributes) as Profile;
+
+        if (!body.customerId || profile?.CustomerID !== body.customerId) {
+          res.status(404).send("Profile not found");
+          return;
+        }
 
         const updatePath = `v4/entity/${body.entity}/table/${body.table}/profile/${profile.profileId}`;
         const { profileId } = await actitoApi<ActitoResponse>(context, "PUT", updatePath, {
