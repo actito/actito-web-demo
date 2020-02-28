@@ -3,20 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@now/node": "^1.4.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
+    "@types/classnames": "^2.2.9",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.28",
+    "@types/node-fetch": "^2.5.5",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
+    "@types/yup": "^0.26.32",
+    "classnames": "^2.2.6",
+    "dotenv": "^8.2.0",
+    "form-data": "^3.0.0",
+    "node-fetch": "^2.6.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-hook-form": "^4.9.8",
     "react-scripts": "3.4.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "yup": "^0.28.1"
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "BROWSER=none npm start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -35,5 +46,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "bulma": "^0.8.0",
+    "node-sass": "^4.13.1"
+  },
+  "prettier": {
+    "printWidth": 120
   }
 }

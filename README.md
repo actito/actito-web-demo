@@ -1,44 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Illustration of actito integration framework for integration to a customer web site
 
-## Available Scripts
+## Use cases
 
-In the project directory, you can run:
+- **Basic form**
 
-### `npm start`
+  This example updates an existing profile that matches the email address with no other validation. Because of its lack of security, this approach is **not recommended** by actito.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Preference center**
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+  In this example, a first set of fields fetches the profileId based on a selection of fields (authentication), and a second set of fields is used for the actual update.
 
-### `npm test`
+## Back end - using the integration framework
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The files in the "/api" folder illustrate the use of the actito integration framework to implement the use cases above.
 
-### `npm run build`
+The credentials for the actito access are expected to be in an environment variable named ACTITO_CONTEXT. It should be a json string with the following structure:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+{
+  "environment": "prod" or "test",
+  "license": <YOUR ACTITO LICENSE NAME>,
+  "credentials":"<YOUR ACTITO LICENSE NAME>/<YOUR WEBSERVICE USERNAME>:<YOUR PASSWORD>"
+  }
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+We use zeit.co's [serverless functions](https://zeit.co/docs/v2/serverless-functions/introduction?query=serverless#) for these illustrations.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Basic form**
 
-### `npm run eject`
+  - `enrich-profile.ts` updates the profile in actito
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **Preference center**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  - `authenticate-profile.ts` authenticates the profile based on the fields provided. It also fetches values for prefill.
+  - `update-profile.ts` updates the profile returned by the authentication.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Please see the jsdocs in the individual files for more information.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Front end
 
-## Learn More
+We use [Create React App](https://create-react-app.dev/) to build the website for this illustration.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Major packages used in this illustration are :
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Bulma](https://bulma.io/) for styling
+- [Reacth Hook Form](https://react-hook-form.com/) for the form handling, with [yup](https://github.com/jquense/yup) for the form validation.

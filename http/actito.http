@@ -1,0 +1,24 @@
+@root = https://api.actito.com/ActitoWebServices/ws/
+
+### get authentication token
+# @name authenticationToken
+
+GET {{root}}/auth/token
+Accept: application/json
+Authorization: {{demodresa-apikey}}
+
+@accessToken = {{authenticationToken.response.body.$.accessToken}}
+
+
+### api entities
+POST http://localhost:3000/api/list-entities
+
+
+### get entities
+GET {{root}}v4/entity/
+Authorization: Basic {{credentials}}
+
+
+### get entities
+GET {{root}}v4/entity/demouk/table/ACTITO4Retail/profile/customerID=1085
+Authorization: Basic {{credentials}}
