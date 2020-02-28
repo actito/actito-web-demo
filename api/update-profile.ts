@@ -44,8 +44,6 @@ export default async function updateProfile(req: NowRequest, res: NowResponse): 
     const response = await actitoApi<ActitoProfile>(context, "GET", fetchPath);
     const profile = propertiesToObject(response.attributes) as Profile;
 
-    console.log({ profile, body });
-
     if (!body.customerId || profile?.CustomerID !== body.customerId) {
       res.status(404).send("Profile not found");
       return;
