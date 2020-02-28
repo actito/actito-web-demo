@@ -30,10 +30,11 @@ export const PreferenceCenter: React.FC<Logger> = ({ addLogEntry }) => {
   };
 
   const updateProfile = async (values: FormData) => {
+    const customerId = parseInt(values.customerId.toString(), 10); // workaround bug in react-form-hook
     const response = await fetch("/api/update-profile", {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ entity, table, ...values })
+      body: JSON.stringify({ entity, table, ...values, customerId })
     });
     if (response.ok) {
       clearError();
