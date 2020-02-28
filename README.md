@@ -1,5 +1,7 @@
 # Illustration of actito integration framework for integration to a customer web site
 
+> **WARNING**: this is a preliminary version!
+
 ## Use cases
 
 - **Basic form**
