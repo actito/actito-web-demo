@@ -4,11 +4,11 @@
 
 - **Basic form**
 
-  This example updates an existing profile that matches the email address with no other validation. Because of its lack of security, this approach is **not recommended** by actito.
+  This example updates an existing profile with matching email address. Because of its lack of security - no validation beyond the email address - this approach is **not recommended** by actito.
 
 - **Preference center**
 
-  In this example, a first set of fields fetches the profileId based on a selection of fields (authentication), and a second set of fields is used for the actual update.
+  In this example, we find the profile using the email address, and check the authenticity based on a sencond field (in this case the customerId). We also fetch information on the authenticated profile to pre-fill fields to update.
 
 ## Back end - using the integration framework
 

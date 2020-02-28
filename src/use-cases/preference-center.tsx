@@ -70,8 +70,9 @@ export const PreferenceCenter: React.FC<Logger> = ({ addLogEntry }) => {
     <>
       <div className="content">
         <p>
-          In this example, a first set of fields fetches the profileId based on a selection of fields (authentication)
-          and a second set of fields is used for the actual update.
+          In this example, we find the profile using the email address, and check the authenticity based on a sencond
+          field (in this case the customerId). We also fetch information on the authenticated profile to pre-fill fields
+          to update.
         </p>
       </div>
 
