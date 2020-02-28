@@ -16,7 +16,7 @@ dotenvConfig();
  * @param res response object as per zeit serverless requirements.
  */
 
-export default async function handler(req: NowRequest, res: NowResponse): Promise<void> {
+export default async function enrichProfile(req: NowRequest, res: NowResponse): Promise<void> {
   type ActitoResponse = { profileId: number };
 
   type Body = {

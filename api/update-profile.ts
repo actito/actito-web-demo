@@ -15,7 +15,7 @@ dotenvConfig();
  * @param res response object as per zeit serverless requirements.
  */
 
-export default async function handler(req: NowRequest, res: NowResponse): Promise<void> {
+export default async function updateProfile(req: NowRequest, res: NowResponse): Promise<void> {
   type Body = {
     entity: string;
     table: string;

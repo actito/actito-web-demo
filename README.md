@@ -1,16 +1,16 @@
-# Illustration of actito integration framework for integration to a customer web site
+# Integrating a website with actito
 
-> **WARNING**: this is a preliminary version!
+_An integration framework illustration_
+
+| :warning: **WARNING**: this is a preliminary version! |
+| ----------------------------------------------------- |
+
 
 ## Use cases
 
-- **Basic form**
+![Basic form](./basic-form.png)
 
-  This example updates an existing profile with matching email address. Because of its lack of security - no validation beyond the email address - this approach is **not recommended** by actito.
-
-- **Preference center**
-
-  In this example, we find the profile using the email address, and check the authenticity based on a sencond field (in this case the customerId). We also fetch information on the authenticated profile to pre-fill fields to update.
+![Preference center](./preference-center.png)
 
 ## Back end - using the integration framework
 
@@ -32,10 +32,78 @@ We use zeit.co's [serverless functions](https://zeit.co/docs/v2/serverless-funct
 
   - `enrich-profile.ts` updates the profile in actito
 
+    ```typescript
+    export default async function enrichProfile(req: NowRequest, res: NowResponse): Promise<void> {
+      type ActitoResponse = { profileId: number };
+
+      type Body = {
+        entity: string;
+        table: string;
+        emailAddress: string;
+        firstName: string;
+      };
+
+      const context: ActitoContext = JSON.parse(process.env.ACTITO_CONTEXT || "{}");
+
+      try {
+        const body: Body = req.body;
+        const { emailAddress, firstName } = body;
+        const actitoPath = `v4/entity/${body.entity}/table/${body.table}/profile/emailAddress=${emailAddress}`;
+        const { profileId } = await actitoApi<ActitoResponse>(context, "PUT", actitoPath, {
+          attributes: objectToProperties({ emailAddress, firstName })
+        });
+        res.send({ enrichedProfileId: profileId });
+      } catch (err) {
+        res.status(400).send(err);
+      }
+    }
+    ```
+
 - **Preference center**
 
   - `authenticate-profile.ts` authenticates the profile based on the fields provided. It also fetches values for prefill.
   - `update-profile.ts` updates the profile returned by the authentication.
+
+    ```typescript
+    export default async function updateProfile(req: NowRequest, res: NowResponse): Promise<void> {
+      type Body = {
+        entity: string;
+        table: string;
+        emailAddress: string;
+        customerId: number;
+        firstName: string;
+      };
+
+      type ActitoProfile = {
+        attributes: ActitoProperty[];
+      };
+
+      type Profile = {
+        profileId: number;
+        firstName: string;
+        emailAddress: string;
+        CustomerID: number;
+      };
+
+      type ActitoResponse = { profileId: number };
+
+      const context: ActitoContext = JSON.parse(process.env.ACTITO_CONTEXT || "{}");
+      try {
+        const body: Body = req.body;
+        const fetchPath = `v4/entity/${body.entity}/table/${body.table}/profile/emailAddress=${body.emailAddress}`;
+        const response = await actitoApi<ActitoProfile>(context, "GET", fetchPath);
+        const profile = propertiesToObject(response.attributes) as Profile;
+
+        const updatePath = `v4/entity/${body.entity}/table/${body.table}/profile/${profile.profileId}`;
+        const { profileId } = await actitoApi<ActitoResponse>(context, "PUT", updatePath, {
+          attributes: objectToProperties({ firstName: body.firstName })
+        });
+        res.send({ updatedProfileId: profileId });
+      } catch (err) {
+        res.status(400).send(err);
+      }
+    }
+    ```
 
 Please see the jsdocs in the individual files for more information.
 
