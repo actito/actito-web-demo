@@ -1,10 +1,12 @@
+| :warning: **WARNING**: this is a preliminary version! |
+| ----------------------------------------------------- |
+
+
 # Integrating a website with actito
 
 _An integration framework illustration_
 
-| :warning: **WARNING**: this is a preliminary version! |
-| ----------------------------------------------------- |
-
+This repository shows how the actito api can be used to feed a profile table from a standard web form with a few lines of simple code.
 
 ## Use cases
 
@@ -12,7 +14,7 @@ _An integration framework illustration_
 
 ![Preference center](./preference-center.png)
 
-## Trying it out on your local environment
+## Trying it out in your environment
 
 1. Clone this on your computer
 1. Add your actito credentials in a .env file at the root of the project (see below)
