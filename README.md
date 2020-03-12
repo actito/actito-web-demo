@@ -1,10 +1,6 @@
-| :warning: **WARNING**: this is a preliminary version! |
-| ----------------------------------------------------- |
-
-
 # Integrating a website with actito
 
-_An integration framework illustration_
+_An integration framework **illustration**_
 
 This repository shows how the actito api can be used to feed a profile table from a standard web form with a few lines of simple code.
 
